@@ -4,14 +4,13 @@
 		body{
 			background-color: rgb(224, 235, 228);
 		}
-
 	</style>
 <head>
 	<meta charset="utf-8">
 	<title>다음 지도 API</title>
 </head>
 <body>
-	<div style="width:90%,;height:2.5vh;margin-bottom:4vh;font-size:3.9vh;font-weight: 900; text-align: center;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Welcome Trash</div>
+	<div style="width:90%;height:2.5vh;margin-bottom:4vh;font-size:3.9vh;font-weight: 900; text-align: center;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Welcome Trash</div>
 	<p><div id="map" style="width:100%;height: 92vh;"></div></p>
 
 	<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=0107c29b3714d2d2ae5ee805b30d092c&libraries=clusterer"></script>
@@ -19,18 +18,47 @@
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = {
 		        center: new kakao.maps.LatLng(36.770256, 126.446376), // 지도의 중심좌표
-		        level: 4, // 지도의 확대 레벨
+		        level: 13, // 지도의 확대 레벨
 		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
 		    }; 
 
 		// 지도를 생성한다 
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
-        
+        // 쓰레기 배출 장소 주소
         var 데이터=[
-            [36.770256, 126.446376, '<div style="pading:5px"> 쓰레기 배출 장소 </div>'],
-            [36.772696, 126.446709, '<div style="pading:5px"> 쓰레기 배출 장소 </div>'],
-            [36.768339, 126.450013, '<div style="pading:5px"> 쓰레기 배출 장소 </div>']
-        ]
+            [36.770256, 126.446376, '<div style="margin:2px;margin-left:4px;"> 쓰레기 배출 장소 </div>'], // 서산
+            [36.772696, 126.446709, '<div style="margin:2px;margin-left:4px;"> 쓰레기 배출 장소 </div>'],
+            [36.768339, 126.450013, '<div style="margin:2px;margin-left:4px;"> 쓰레기 배출 장소 </div>'],
+			
+			[35.873859, 128.602228, '<div style="margin:2px;margin-left:4px;">  78태평아파트상가내 </div>'], // 대구광역시 중구
+			[35.872143, 128.604784, '<div style="margin:2px;margin-left:4px;">  동인네거리 시청별관옆 </div>'],
+			[35.872282, 128.602127, '<div style="margin:2px;margin-left:4px;">  시티타운내 1층 상가 </div>'],
+			[35.870109, 128.602332, '<div style="margin:2px;margin-left:4px;">  시청앞 화성파크드림 오피스텔 1층 </div>'],
+			[35.871345, 128.609207, '<div style="margin:2px;margin-left:4px;">  동인맨션 옆 네거리 </div>'],
+			[35.870142, 128.606563, '<div style="margin:2px;margin-left:4px;">  중구청 뒤쪽 네거리 </div>'],
+			[35.870095, 128.608578, '<div style="margin:2px;margin-left:4px;">  삼익맨션 부근 </div>'],
+			[35.87074, 128.611174, '<div style="margin:2px;margin-left:4px;"> 동인시영아파트 앞 </div>'],
+			[35.868752, 128.612255, '<div style="margin:2px;margin-left:4px;"> 동부상가아파트 옆 </div>'],
+			[35.866712, 128.607511, '<div style="margin:2px;margin-left:4px;"> 청아람 상가 건너편 </div>'],
+			[35.866737, 128.611342, '<div style="margin:2px;margin-left:4px;"> 동인초 인근 명성사우나 옆 </div>'],
+			[35.865129, 128.601486, '<div style="margin:2px;margin-left:4px;"> 진석타워 뒤 </div>'],
+			[35.865242, 128.605861, '<div style="margin:2px;margin-left:4px;"> 경대병원 장례식장 출차방면 투썸플레이스 건너편 </div>'],
+			[35.866246, 128.60867, '<div style="margin:2px;margin-left:4px;"> 삼덕청아람 리슈빌아파트 건너편 </div>'],
+			[35.863552, 128.60504, '<div style="margin:2px;margin-left:4px;"> 삼덕하이츠 1층 </div>'],
+			[35.874305, 128.59779, '<div style="margin:2px;margin-left:4px;"> 대구역 신한은행 옆 </div>'],
+			[35.871972, 128.597463, '<div style="margin:2px;margin-left:4px;"> 교동 축산농협 앞 </div>'],
+			[35.872585, 128.599162, '<div style="margin:2px;margin-left:4px;"> 중소기업은행 뒤 </div>'],
+			[35.862129, 128.597522, '<div style="margin:2px;margin-left:4px;"> 봉산뜨란채 앞 </div>'],
+			[35.869091, 128.595082, '<div style="margin:2px;margin-left:4px;"> 동성로대백야외무대 맥도널드 바로옆 가게 </div>'],
+			[35.867754, 128.593899, '<div style="margin:2px;margin-left:4px;"> 중앙파출소 인근 센트럴M빌딩 내 </div>'],
+			[35.870008, 128.599187, '<div style="margin:2px;margin-left:4px;"> 공평네거리에서 2.28공원 사이 </div>'],
+			[35.86826, 128.599029, '<div style="margin:2px;margin-left:4px;"> 공평주차장 맞은편 </div>'],
+			[35.871122, 128.588852, '<div style="margin:2px;margin-left:4px;"> 곽병원 안쪽 모퉁이 </div>'],
+			[35.867698, 128.592392, '<div style="margin:2px;margin-left:4px;"> 진골목 안쪽 미도다방 옆 </div>'],
+			[35.866634, 128.592451, '<div style="margin:2px;margin-left:4px;"> 반월당삼성생명뒤쪽 염매시장 초입 </div>'],
+			[35.866761, 128.588731, '<div style="margin:2px;margin-left:4px;"> 계산오거리 신성미소시티 1층 상가내 </div>'],
+			[35.872699, 128.590846, '<div style="margin:2px;margin-left:4px;"> 사보이호텔 맞은편 </div>'],
+		]
 
 		var markers = [];
 		// 마커 클러스터러를 생성합니다 
