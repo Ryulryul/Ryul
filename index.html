@@ -4,15 +4,21 @@
 		body{
 			background-color: rgb(224, 235, 228);
 		}
+		button{
+			height: 5vh; width: 75px;
+			font-size: 110%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+			font-weight: 300;
+		}
 	</style>
 <head>
 	<meta charset="utf-8">
 	<title>다음 지도 API</title>
 </head>
 <body>
-	<div style="width:90%;height:2.5vh;margin-bottom:4vh;font-size:3.9vh;font-weight: 900; text-align: center;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Welcome Trash</div>
+	<div style="float: right;margin-right: 0.1%;"><a href="https://naver.com"><button type="button">Blog</button></a></div>
+	<div style="float:left;width:90%;height:2.5vh;margin-bottom:4vh;font-size:3.9vh;font-weight: 900; text-align: center;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Welcome Trash</div>
 	<p><div id="map" style="width:100%;height: 92vh;"></div></p>
-
+	
 	<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=0107c29b3714d2d2ae5ee805b30d092c&libraries=clusterer"></script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -58,6 +64,14 @@
 			[35.866634, 128.592451, '<div style="margin:2px;margin-left:4px;"> 반월당삼성생명뒤쪽 염매시장 초입 </div>'],
 			[35.866761, 128.588731, '<div style="margin:2px;margin-left:4px;"> 계산오거리 신성미소시티 1층 상가내 </div>'],
 			[35.872699, 128.590846, '<div style="margin:2px;margin-left:4px;"> 사보이호텔 맞은편 </div>'],
+			
+			[37.527330, 126.897902, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 국회대로574(피자헛) </div>'], //서울특별시 영등포구			
+			[37.522245, 126.897002, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 당산로14길10-1 </div>'],
+			[37.522437, 126.893931, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 영등포로 109 </div>'],
+			[37.525177, 126.897986, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 당산로30길14 </div>'],
+			[37.521029, 126.899770, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 영등포로 163(조광시장) </div>'],
+			[37.522389, 126.899486, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 영신로43길 17 </div>'],
+			[37.521029, 126.899770, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 영등포로 163(조광시장) </div>'],
 		]
 
 		var markers = [];
