@@ -4,27 +4,47 @@
 		body{
 			background-color: rgb(224, 235, 228);
 		}
-		button{
+		#btn1{
 			height: 5vh; width: 75px;
 			font-size: 110%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-			font-weight: 300;
+			font-weight: 300; border-radius: 5px; float: right; margin-right: 0.1%;
 		}
+	.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+	.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+	.map_wrap {position:relative;width:100%;height:75px;}
+	#menu_wrap {position:absolute;top:0;left:1%;top:9%;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+	.bg_white {background:#fff;}
+	#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+	#menu_wrap .option{text-align: center;}
+	#menu_wrap .option p {margin:10px 0;}  
+	#menu_wrap .option button {margin-left:5px;}
 	</style>
 <head>
 	<meta charset="utf-8">
-	<title>다음 지도 API</title>
+	<title>Welcome Trash</title>
 </head>
 <body>
-	<div style="float: right;margin-right: 0.1%;"><a href="https://naver.com"><button type="button">Blog</button></a></div>
+	<div><a href="https://naver.com"><button type="button" id="btn1">Blog</button></a></div>
 	<div style="float:left;width:90%;height:2.5vh;margin-bottom:4vh;font-size:3.9vh;font-weight: 900; text-align: center;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Welcome Trash</div>
 	<p><div id="map" style="width:100%;height: 92vh;"></div></p>
+
+	<div id="menu_wrap" class="bg_white">
+        <div class="option">
+            <div>
+                <form onsubmit="searchPlaces(); return false;">
+                    키워드 : <input type="text" value="" id="keyword" size="15"> 
+                    <button type="submit">검색하기</button> 
+                </form>
+            </div>
+    </div>
+</div>
 	
-	<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=0107c29b3714d2d2ae5ee805b30d092c&libraries=clusterer"></script>
+	<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=0107c29b3714d2d2ae5ee805b30d092c&libraries=clusterer"></script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = {
 		        center: new kakao.maps.LatLng(36.770256, 126.446376), // 지도의 중심좌표
-		        level: 13, // 지도의 확대 레벨
+		        level: 12, // 지도의 확대 레벨
 		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
 		    }; 
 
@@ -32,7 +52,7 @@
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
         // 쓰레기 배출 장소 주소
         var 데이터=[
-            [36.770256, 126.446376, '<div style="margin:2px;margin-left:4px;"> 쓰레기 배출 장소 </div>'], // 서산
+            [36.770256, 126.446376, '<div style="margin:2px;margin-left:4px;"> 쓰레기 배출 장소 </div>'], // 서산 예천동
             [36.772696, 126.446709, '<div style="margin:2px;margin-left:4px;"> 쓰레기 배출 장소 </div>'],
             [36.768339, 126.450013, '<div style="margin:2px;margin-left:4px;"> 쓰레기 배출 장소 </div>'],
 			
@@ -64,14 +84,184 @@
 			[35.866634, 128.592451, '<div style="margin:2px;margin-left:4px;"> 반월당삼성생명뒤쪽 염매시장 초입 </div>'],
 			[35.866761, 128.588731, '<div style="margin:2px;margin-left:4px;"> 계산오거리 신성미소시티 1층 상가내 </div>'],
 			[35.872699, 128.590846, '<div style="margin:2px;margin-left:4px;"> 사보이호텔 맞은편 </div>'],
+			[35.872614, 128.593514, '<div style="margin:2px;margin-left:4px;"> 대보아파트 상가 </div>'],
+			[35.872358, 128.586757, '<div style="margin:2px;margin-left:4px;"> 종로초 인근 돼지골목 내 </div>'],
+			[35.872222, 128.587055, '<div style="margin:2px;margin-left:4px;"> 서성로 돼지골목 내 초입 </div>'],
+			[35.871371, 128.585831, '<div style="margin:2px;margin-left:4px;"> 삼일사우나 옆 </div>'],
+			[35.875555, 128.580025, '<div style="margin:2px;margin-left:4px;"> 우체국옆 복개천 중간 </div>'],
+			[35.875653, 128.585752, '<div style="margin:2px;margin-left:4px;"> 대구역센트럴자이 상가 2층 </div>'],
+			[35.874805, 128.585989, '<div style="margin:2px;margin-left:4px;"> 대구역센트럴자이 후문 골목 </div>'],
+			[35.865948, 128.576068, '<div style="margin:2px;margin-left:4px;"> 대신동 주민센터 옆 </div>'],
+
+			[35.85126786, 128.4881572, '<div style="margin:2px;margin-left:4px;"> 버스정류장(계명대학교동문건너2) </div>'], //대구광역시 달서구
+			[35.84855779, 128.5278623, '<div style="margin:2px;margin-left:4px;"> 버스정류장(용산역(2번출구)) </div>'], 
+			[35.84939577, 128.5340233, '<div style="margin:2px;margin-left:4px;"> 버스정류장(죽전네거리1) </div>'], 
+			[35.85443745, 128.5492583, '<div style="margin:2px;margin-left:4px;"> 버스정류장(감삼네거리2) </div>'], 
+			[35.81329928, 128.5213207, '<div style="margin:2px;margin-left:4px;"> 버스정류장(진천역(2번출구)) </div>'], 
+			[35.83576482, 128.5223978, '<div style="margin:2px;margin-left:4px;"> 버스정류장(서부정류장1) </div>'], 
+			[35.81717168, 128.5395577, '<div style="margin:2px;margin-left:4px;"> 버스정류장(상인현대맨션앞) </div>'], 
+			[35.84901131, 128.5274916, '<div style="margin:2px;margin-left:4px;"> 버스정류장(용산역1번출구) </div>'], 
+			[35.83709204, 128.5557842, '<div style="margin:2px;margin-left:4px;"> 버스정류장(서부정류장역1번출구) </div>'], 
 			
-			[37.527330, 126.897902, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 국회대로574(피자헛) </div>'], //서울특별시 영등포구			
-			[37.522245, 126.897002, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 당산로14길10-1 </div>'],
-			[37.522437, 126.893931, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 영등포로 109 </div>'],
-			[37.525177, 126.897986, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 당산로30길14 </div>'],
-			[37.521029, 126.899770, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 영등포로 163(조광시장) </div>'],
-			[37.522389, 126.899486, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 영신로43길 17 </div>'],
-			[37.521029, 126.899770, '<div style="margin:2px;margin-left:4px;"> 서울특별시 영등포구 영등포로 163(조광시장) </div>'],
+			[37.527330, 126.897902, '<div style="margin:2px;margin-left:4px;"> 영등포구 국회대로574(피자헛) </div>'], //서울특별시 영등포구			
+			[37.522245, 126.897002, '<div style="margin:2px;margin-left:4px;"> 영등포구 당산로14길10-1 </div>'],
+			[37.522437, 126.893931, '<div style="margin:2px;margin-left:4px;"> 영등포구 영등포로 109 </div>'],
+			[37.525177, 126.897986, '<div style="margin:2px;margin-left:4px;"> 영등포구 당산로30길14 </div>'],
+			[37.521029, 126.899770, '<div style="margin:2px;margin-left:4px;"> 영등포구 영등포로 163(조광시장) </div>'],
+			[37.522389, 126.899486, '<div style="margin:2px;margin-left:4px;"> 영등포구 영신로43길 17 </div>'],
+			[37.521029, 126.899770, '<div style="margin:2px;margin-left:4px;"> 영등포구 영등포로 163(조광시장) </div>'],
+
+			[37.277270, 127.449039, '<div style="margin:2px;margin-left:4px;"> 창전동 한솔아파트 </div>'], //이천시 창전동
+      		[37.281569, 127.451716, '<div style="margin:2px;margin-left:4px;"> 창전동 시온성교회 </div>'],
+      		[37.282627, 127.450471, '<div style="margin:2px;margin-left:4px;"> 창전동 한양맨션</div>'],
+			[37.281015, 127.446336, '<div style="margin:2px;margin-left:4px;"> 창전동 장세훈치과</div>'],
+			[37.281937, 127.441113, '<div style="margin:2px;margin-left:4px;"> 창전동 NC백화점 </div>'],
+			[37.282016, 127.443307, '<div style="margin:2px;margin-left:4px;"> 창전동 계림건축사 </div>'],
+			[37.284197, 127.450877, '<div style="margin:2px;margin-left:4px;"> 창전동 예림피아노 </div>'],
+			[37.285575, 127.439957, '<div style="margin:2px;margin-left:4px;"> 창전동 청자세탁소 </div>'],
+			[37.285104, 127.440152, '<div style="margin:2px;margin-left:4px;"> 창전동 대성태권도 </div>'],
+			[37.286188, 127.439627, '<div style="margin:2px;margin-left:4px;"> 창전동 이화어린이집 </div>'],
+			[37.286256, 127.448546, '<div style="margin:2px;margin-left:4px;"> 창전동 북새말공영주차장 </div>'],
+
+			[37.239723, 127.357213, '<div style="margin:2px;margin-left:4px;"> 마장면 하이마트물류 </div>'], //이천시 마장면
+			[37.248322, 127.357216, '<div style="margin:2px;margin-left:4px;"> 마장면 아우성중국집 </div>'],
+			[37.236721, 127.364279, '<div style="margin:2px;margin-left:4px;"> 마장면 덕평칼국수 </div>'],
+			[37.248227, 127.441390, '<div style="margin:2px;margin-left:4px;"> 마장면 달려라주유소 </div>'],
+			[37.246741, 127.370981, '<div style="margin:2px;margin-left:4px;"> 마장면 햇살어린이집 </div>'],
+			[37.224220, 127.427223, '<div style="margin:2px;margin-left:4px;"> 마장면 호법초교 </div>'],
+			[37.245783, 127.348832, '<div style="margin:2px;margin-left:4px;"> 마장면 한솔요양원 </div>'],
+			[37.252225, 127.408935, '<div style="margin:2px;margin-left:4px;"> 마장면 이천공업사 </div>'],
+			[37.248839, 127.357883, '<div style="margin:2px;margin-left:4px;"> 마장면 마장면사무소 </div>'],
+			[37.249195, 127.441000, '<div style="margin:2px;margin-left:4px;"> 마장면 유산2리회관 </div>'],
+
+			[37.275613, 127.448076, '<div style="margin:2px;margin-left:4px;"> 중리동 센트럴빌딩 </div>'], //이천시 중리동
+			[37.275606, 127.442930, '<div style="margin:2px;margin-left:4px;"> 중리동 우체국  </div>'],
+			[37.279899, 127.440986, '<div style="margin:2px;margin-left:4px;"> 중리동 이천성당 </div>'],
+			[37.278019, 127.441037, '<div style="margin:2px;margin-left:4px;"> 중리동 노인복지관 </div>'],
+			[37.279825, 127.438532, '<div style="margin:2px;margin-left:4px;"> 중리동 숙미용실 </div>'],
+			[37.277229, 127.437287, '<div style="margin:2px;margin-left:4px;"> 중리동 고담 상가 </div>'],
+			[37.276285, 127.437888, '<div style="margin:2px;margin-left:4px;"> 중리동 선린교회 </div>'],
+			[37.273720, 127.450357, '<div style="margin:2px;margin-left:4px;"> 중리동 바른병원 </div>'],
+			[37.276824, 127.438392, '<div style="margin:2px;margin-left:4px;"> 중리동 대흥당 </div>'],
+			[37.276889, 127.444098, '<div style="margin:2px;margin-left:4px;"> 중리동 이천남 초교 </div>'],
+
+			[37.282023, 127.482413, '<div style="margin:2px;margin-left:4px;"> 부발읍 무촌리 현광아파트 </div>'], //이천시 부발읍
+			[37.287099, 127.488885, '<div style="margin:2px;margin-left:4px;"> 부발읍 무촌리 부발 지구대 </div>'],
+			[37.259581, 127.479916, '<div style="margin:2px;margin-left:4px;"> 부발읍 신하리 동국사우나 </div>'],
+			[37.285752, 127.496617, '<div style="margin:2px;margin-left:4px;"> 부발읍 무촌리 종합운동장 </div>'],
+			[37.241191, 127.501908, '<div style="margin:2px;margin-left:4px;"> 부발읍 아미리 도드람농협 </div>'],
+			[37.242466, 127.518204, '<div style="margin:2px;margin-left:4px;"> 부발읍 가산리 가산초교 </div>'],
+			[37.291133, 127.507257, '<div style="margin:2px;margin-left:4px;"> 부발읍 신원리 신지아파트 </div>'],
+			[37.265256, 127.479760, '<div style="margin:2px;margin-left:4px;"> 부발읍 신하리 효양중고교 </div>'],
+			[37.247564, 127.493546, '<div style="margin:2px;margin-left:4px;"> 부발읍 한국도로공사 </div>'],
+			[37.262984, 127.480389, '<div style="margin:2px;margin-left:4px;"> 부발읍 신하리 믿음의 교회 </div>'],
+			
+			[37.279800, 127.465857, '<div style="margin:2px;margin-left:4px;"> 안흥동 성애원 </div>'], //이천시 안흥동
+			[37.278590, 127.461260, '<div style="margin:2px;margin-left:4px;"> 안흥동 주공아파트 </div>'],
+			[37.279186, 127.464507, '<div style="margin:2px;margin-left:4px;"> 안흥동 서경한우 </div>'],
+			[37.280411, 127.456168, '<div style="margin:2px;margin-left:4px;"> 안흥동 안흥초등학교 </div>'],
+			[37.276625, 127.458045, '<div style="margin:2px;margin-left:4px;"> 안흥동 숯불고기마을 </div>'],
+			[37.276184, 127.457471, '<div style="margin:2px;margin-left:4px;"> 안흥동 롯대캐슬 </div>'],
+			[37.280702, 127.454275, '<div style="margin:2px;margin-left:4px;"> 안흥동 힘찬건강원 </div>'],
+			[37.277390, 127.455348, '<div style="margin:2px;margin-left:4px;"> 안흥동 일성아파트 </div>'],
+			[37.276118, 127.460991, '<div style="margin:2px;margin-left:4px;"> 안흥동 브라운스톤아파트 </div>'],
+			[37.276102, 127.451689, '<div style="margin:2px;margin-left:4px;"> 안흥동 설봉온천 </div>'],
+
+			[37.290484, 127.461479, '<div style="margin:2px;margin-left:4px;"> 중포동 한내초교 </div>'], //이천시 중포동
+			[37.283323, 127.458325, '<div style="margin:2px;margin-left:4px;"> 중포동 건강보험 </div>'],
+			[37.292268, 127.455664, '<div style="margin:2px;margin-left:4px;"> 중포동 혜인빌 </div>'],
+			[37.293838, 127.458926, '<div style="margin:2px;margin-left:4px;"> 중포동 이마트 </div>'],
+			[37.293705, 127.454557, '<div style="margin:2px;margin-left:4px;"> 중포동 우리마트 </div>'],
+			[37.285431, 127.457590, '<div style="margin:2px;margin-left:4px;"> 중포동 이현고등학교 </div>'],
+			[37.293705, 127.454557, '<div style="margin:2px;margin-left:4px;"> 중포동 아름다운가구 </div>'],
+			[37.295940, 127.454678, '<div style="margin:2px;margin-left:4px;"> 중포동 한솔1차아파트  </div>'],
+			[37.294959, 127.453709, '<div style="margin:2px;margin-left:4px;"> 중포동 대우2차아파트 </div>'],
+			[37.291104, 127.454279, '<div style="margin:2px;margin-left:4px;"> 중포동 2000마트 </div>'],
+			[37.290313, 127.452905, '<div style="margin:2px;margin-left:4px;"> 중포동 부악아파트 </div>'],
+			[37.290278, 127.452390, '<div style="margin:2px;margin-left:4px;"> 증포동 사무소 </div>'],
+			[37.288323, 127.454796, '<div style="margin:2px;margin-left:4px;"> 중포동 삼성써비스센터 </div>'],
+
+			[37.287276, 127.465771, '<div style="margin:2px;margin-left:4px;"> 갈산동 대림홈타운 </div>'], //이천시 갈산동
+			[37.287357, 127.466506, '<div style="margin:2px;margin-left:4px;"> 갈산동 아름다운가구 </div>'],
+			[37.288808, 127.468016, '<div style="margin:2px;margin-left:4px;"> 갈산동 큰산아파트 </div>'],
+			[37.290005, 127.464267, '<div style="margin:2px;margin-left:4px;"> 갈산동 우성아파트  </div>'],
+			[37.291997, 127.454163, '<div style="margin:2px;margin-left:4px;"> 갈산동 한사랑의원 </div>'],
+			[37.282667, 127.455126, '<div style="margin:2px;margin-left:4px;"> 갈산동 김가네김밥 </div>'],
+			[37.280443, 127.466321, '<div style="margin:2px;margin-left:4px;"> 갈산동 신도리코 </div>'],
+			[37.282657, 127.456021, '<div style="margin:2px;margin-left:4px;"> 갈산동 현진에버빌아파트 </div>'],
+			[37.292070, 127.465235, '<div style="margin:2px;margin-left:4px;"> 갈산동 신일아파트 </div>'],
+			[37.281952, 127.454765, '<div style="margin:2px;margin-left:4px;"> 갈산동 보은아파트 </div>'],
+
+			[37.115639, 127.629630, '<div style="margin:2px;margin-left:4px;"> 장호원읍 장호원어린이집 </div>'], //이천시 장호원읍
+			[37.119113, 127.619639, '<div style="margin:2px;margin-left:4px;"> 장호원읍 상승터미널 </div>'],
+			[37.127217, 127.618281, '<div style="margin:2px;margin-left:4px;"> 장호원읍 장호원고 </div>'],
+			[37.116962, 127.631502, '<div style="margin:2px;margin-left:4px;"> 장호원읍 삼성전자 </div>'],
+			[37.117080, 127.631462, '<div style="margin:2px;margin-left:4px;"> 장호원읍 김밥천국 </div>'],
+			[37.117712, 127.633237, '<div style="margin:2px;margin-left:4px;"> 장호원읍 유진약국 </div>'],
+			[37.120949, 127.630962, '<div style="margin:2px;margin-left:4px;"> 장호원읍 노탑펌프장 </div>'],
+			[37.118787, 127.632335, '<div style="margin:2px;margin-left:4px;"> 장호원읍 삼화페인트 </div>'],
+			[37.117862, 127.632292, '<div style="margin:2px;margin-left:4px;"> 장호원읍 장호원마트 </div>'],
+			[37.115791, 127.633138, '<div style="margin:2px;margin-left:4px;"> 장호원읍 장미가구 </div>'],
+
+			[37.287276, 127.465771, '<div style="margin:2px;margin-left:4px;"> 대월면 아미쇼핑 </div>'], //이천시 대월면
+			[37.243587, 127.495331, '<div style="margin:2px;margin-left:4px;"> 대월면 하모니마트 </div>'],
+			[37.241742, 127.496384, '<div style="margin:2px;margin-left:4px;"> 대월면 양평해장국 </div>'],
+			[37.241742, 127.496384, '<div style="margin:2px;margin-left:4px;"> 대월면 사천성 </div>'],
+			[37.229869, 127.492273, '<div style="margin:2px;margin-left:4px;"> 대월면 대월면사무소 </div>'],
+			[37.223574, 127.496756, '<div style="margin:2px;margin-left:4px;"> 대월면 초지약국 </div>'],
+			[37.222069, 127.498558, '<div style="margin:2px;margin-left:4px;"> 대월면 한나원 </div>'],
+			[37.231099, 127.494432, '<div style="margin:2px;margin-left:4px;"> 대월면 삼원아파트 </div>'],
+			[37.233845, 127.494435, '<div style="margin:2px;margin-left:4px;"> 대월면 초지2리마을회관 </div>'],
+			[37.242565, 127.497391, '<div style="margin:2px;margin-left:4px;"> 대월면 대월소방서 </div>'],
+
+			[37.138361, 127.511441, '<div style="margin:2px;margin-left:4px;"> 설성면 설성한식부페 </div>'], //이천시 설성면
+			[37.137234, 127.511284, '<div style="margin:2px;margin-left:4px;"> 설성면 전주부대찌개 </div>'],
+			[37.131862, 127.520649, '<div style="margin:2px;margin-left:4px;"> 설성면 설성하나로마트 </div>'],
+			[37.131206, 127.518925, '<div style="margin:2px;margin-left:4px;"> 설성면 설성숯불갈비 </div>'],
+			[37.130674, 127.520563, '<div style="margin:2px;margin-left:4px;"> 설성면 설성반점 </div>'],
+			[37.132753, 127.519774, '<div style="margin:2px;margin-left:4px;"> 설성면 설성식품 </div>'],
+			[37.132431, 127.521926, '<div style="margin:2px;margin-left:4px;"> 설성면 설성면사무소 </div>'],
+			[37.128551, 127.521371, '<div style="margin:2px;margin-left:4px;"> 설성면 풍기건설 </div>'],
+			[37.109054, 127.537075, '<div style="margin:2px;margin-left:4px;"> 설성면 행죽1리마을회관 </div>'],
+			[37.136041, 127.518662, '<div style="margin:2px;margin-left:4px;"> 설성면 세무고등학교 </div>'],
+
+      [37.093769, 127.543888, '<div style="margin:2px;margin-left:4px;"> 율면 율면어린이집 </div>'], //이천시 율면
+			[37.093113, 127.545261, '<div style="margin:2px;margin-left:4px;"> 율면 세븐일레븐 </div>'],
+			[37.095305, 127.546970, '<div style="margin:2px;margin-left:4px;"> 율면 율면파출소 </div>'],
+			[37.094228, 127.546428, '<div style="margin:2px;margin-left:4px;"> 율면 율면사무소 </div>'],
+			[37.088022, 127.542638, '<div style="margin:2px;margin-left:4px;"> 율면 율면초,중,고 </div>'],
+			[37.052856, 127.540300, '<div style="margin:2px;margin-left:4px;"> 율면 율면교회 </div>'],
+			[37.083239, 127.555750, '<div style="margin:2px;margin-left:4px;"> 율면 월포3,4리마을회관 </div>'],
+			[37.089180, 127.579288, '<div style="margin:2px;margin-left:4px;"> 율면 월포보건소 </div>'],
+			[37.096777, 127.549276, '<div style="margin:2px;margin-left:4px;"> 율면 HY냉장 </div>'],
+
+			[37.306663, 127.412528, '<div style="margin:2px;margin-left:4px;"> 신둔면 나드리부폐 </div>'], //이천시 신둔면
+			[37.305681, 127.404629, '<div style="margin:2px;margin-left:4px;"> 신둔면 레이캐슬 </div>'],
+			[37.306158, 127.404157, '<div style="margin:2px;margin-left:4px;"> 신둔면 신둔면사무소 </div>'],
+			[37.308561, 127.402713, '<div style="margin:2px;margin-left:4px;"> 신둔면 MG새마을금고 </div>'],
+			[37.309953, 127.401736, '<div style="margin:2px;margin-left:4px;"> 신둔면 서울곰탕 </div>'],
+			[37.310308, 127.403332, '<div style="margin:2px;margin-left:4px;"> 신둔면 신둔초교 </div>'],
+			[37.311362, 127.401063, '<div style="margin:2px;margin-left:4px;"> 신둔면 이천돌솥밥 </div>'],
+			[37.310911, 127.401970, '<div style="margin:2px;margin-left:4px;"> 신둔면 천서리이천막국수 </div>'],
+			[37.312998, 127.399715, '<div style="margin:2px;margin-left:4px;"> 신둔면 대한민국장어집 </div>'],
+			[37.315796, 127.397698, '<div style="margin:2px;margin-left:4px;"> 신둔면 신둔체육공원 </div>'],
+
+			[37.176405, 127.473374, '<div style="margin:2px;margin-left:4px;"> 모가면 모가중학교 </div>'], //이천시 모가면
+			[37.178833, 127.431989, '<div style="margin:2px;margin-left:4px;"> 모가면 어농보건진료소 </div>'],
+			[37.158186, 127.438425, '<div style="margin:2px;margin-left:4px;"> 모가면 소나무집 </div>'],
+			[37.189003, 127.440944, '<div style="margin:2px;margin-left:4px;"> 모가면 GNB </div>'],
+			[37.197944, 127.446180, '<div style="margin:2px;margin-left:4px;"> 모가면 신갈버스정류장 </div>'],
+			[37.198374, 127.447874, '<div style="margin:2px;margin-left:4px;"> 모가면 명품한우 </div>'],
+			[37.177967, 127.476917, '<div style="margin:2px;margin-left:4px;"> 모가면 아이랜드어린이집 </div>'],
+			[37.174447, 127.479405, '<div style="margin:2px;margin-left:4px;"> 모가면 진가초등학교 </div>'],
+			[37.183237, 127.455823, '<div style="margin:2px;margin-left:4px;"> 모가면 모가체육공원 </div>'],
+			[37.162441, 127.479524, '<div style="margin:2px;margin-left:4px;"> 모가면 농협주유 </div>'],
+
+			[37.223048, 127.424959, '<div style="margin:2px;margin-left:4px;"> 호법면 호법면사무소 </div>'], //이천시 호법면
+			[37.223410, 127.427057, '<div style="margin:2px;margin-left:4px;"> 호법면 호법레포츠공원 </div>'],
+			[37.223048, 127.424959, '<div style="margin:2px;margin-left:4px;"> 호법면 호법농협주유소 </div>'],
+			[37.242423, 127.399822, '<div style="margin:2px;margin-left:4px;"> 호법면 롯데프리미엄아울렛 </div>'],
+			[37.241633, 127.400849, '<div style="margin:2px;margin-left:4px;"> 호법면 엔젤리너스커피 </div>'],
 		]
 
 		var markers = [];
@@ -115,9 +305,27 @@
 		}
 
         
+        window.open("bad.html");
         
-        
+	// 장소 검색 객체를 생성합니다
+	var ps = new kakao.maps.services.Places();  
 
+	// 키워드로 장소를 검색합니다
+	searchPlaces();
+
+	// 키워드 검색을 요청하는 함수입니다
+	function searchPlaces() {
+
+    	var keyword = document.getElementById('keyword').value;
+
+    	if (!keyword.replace(/^\s+|\s+$/g, '')) {
+        alert('키워드를 입력해주세요!');
+        return false;
+    	}
+
+    	// 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+    	ps.keywordSearch( keyword, placesSearchCB); 
+	}
 
 
 
